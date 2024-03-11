@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 body {
-    background-color: #f5f5f5;
+    background-color: #f3f3f3;
+}
+
+.bannerBackground {
+    background: linear-gradient(0deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .5)), url(/banner.png);
+    background-repeat: no-repeat;
+    background-position: center;
 }

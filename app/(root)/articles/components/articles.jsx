@@ -7,11 +7,11 @@ export default function Articles() {
   }
   return (
     <section className="container mx-auto">
-      <div className="mb-[50px]">
+      <div className="flex items-center flex-col mb-[50px]">
         <h1 className="text-[35px] font-medium">Articles</h1>
-        <form className="flex mt-[15px] drop-shadow-md">
+        <form className="flex mt-[15px] w-full max-w-[450px] drop-shadow-md">
           <input
-            className="text-[18px] w-full max-w-[350px] h-[50px] px-[15px] rounded-[15px_0_0_15px]"
+            className="text-[18px] w-full max-w-[300px] h-[50px] px-[15px] rounded-[15px_0_0_15px]"
             type="search"
             placeholder="Search article.."
           />
@@ -23,7 +23,7 @@ export default function Articles() {
           </button>
         </form>
       </div>
-      <div className="flex flex-wrap gap-[50px]">
+      <div className="flex justify-center flex-wrap gap-[50px]">
         <Article data={data} />
         <Article data={data} />
         <Article data={data} />
