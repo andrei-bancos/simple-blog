@@ -23,7 +23,7 @@ export default function Statistics() {
   return(
     <section className="container mx-auto">
       <h3 className="text-[35px] text-center font-medium">Statistics</h3>
-      <div className="flex flex-wrap justify-center lg:justify-start gap-[50px] mt-[15px] rounded-[10px]">
+      <div className="flex flex-wrap justify-center lg:justify-start gap-[50px] mt-[30px] rounded-[10px]">
         <div className="flex flex-col w-full lg:w-auto max-w-[500px] gap-[15px]">
           <div className="h-fit text-center bg-white shadow-md p-[10px_15px] rounded-[10px]">
             <h5 className="text-[25px] font-medium mb-[15px]">16</h5>

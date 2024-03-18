@@ -11,3 +11,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.selectedCategory {
+    color: white;
+    background-color: rgb(239 68 68);
+}
