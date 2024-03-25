@@ -2,7 +2,7 @@
 import {Bar} from "react-chartjs-2";
 import {BarElement, CategoryScale, Chart, LinearScale, Tooltip} from "chart.js";
 
-export default function Statistics() {
+export default function Statistics({totalArticles = 0}) {
   Chart.register(CategoryScale, LinearScale, BarElement, Tooltip)
   const chartData = {
     labels: ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'],
@@ -26,7 +26,7 @@ export default function Statistics() {
       <div className="flex flex-wrap justify-center lg:justify-start gap-[50px] mt-[30px] rounded-[10px]">
         <div className="flex flex-col w-full lg:w-auto max-w-[500px] gap-[15px]">
           <div className="h-fit text-center bg-white shadow-md p-[10px_15px] rounded-[10px]">
-            <h5 className="text-[25px] font-medium mb-[15px]">16</h5>
+            <h5 className="text-[25px] font-medium mb-[15px]">{totalArticles}</h5>
             <h4 className="text-[18px] font-medium">Total articles</h4>
           </div>
           <div className="h-fit text-center bg-white shadow-md p-[10px_15px] rounded-[10px]">
