@@ -1,8 +1,11 @@
 "use client"
 import {Bar} from "react-chartjs-2";
 import {BarElement, CategoryScale, Chart, LinearScale, Tooltip} from "chart.js";
+import {useContext} from "react";
+import VisitatorsCountContext from "@/app/globalComponents/statisticsCountContext";
 
 export default function Statistics({totalArticles = 0}) {
+  const visitatorCount = useContext(VisitatorsCountContext)
   Chart.register(CategoryScale, LinearScale, BarElement, Tooltip)
   const chartData = {
     labels: ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'],
@@ -34,7 +37,7 @@ export default function Statistics({totalArticles = 0}) {
             <h4 className="text-[18px] font-medium">Views today</h4>
           </div>
           <div className="h-fit text-center bg-white shadow-md p-[10px_15px] rounded-[10px]">
-            <h5 className="text-[25px] font-medium mb-[15px]">5</h5>
+            <h5 className="text-[25px] font-medium mb-[15px]">{visitatorCount}</h5>
             <h4 className="text-[18px] font-medium">Online users now</h4>
           </div>
         </div>

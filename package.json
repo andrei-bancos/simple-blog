@@ -7,16 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "websocket": "node ./webSocket/server.js"
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "chart.js": "^4.4.2",
     "next": "14.1.1",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

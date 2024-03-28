@@ -10,7 +10,7 @@ export default async function LastArticles() {
       <div className="flex justify-center flex-wrap gap-[50px]">
         {
           articles ?
-            articles.slice(3).map(article => (
+            articles.slice(0, 6).map(article => (
               <Article key={article.id} data={article} />
             ))
           : <p>Articles not found.</p>
