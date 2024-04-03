@@ -26,3 +26,32 @@ export async function sendMessage(data) {
     return {success: false, message: "Error try later.."}
   }
 }
+
+export async function getMessages() {
+  try {
+    const messages = await clientDB.contactMessage.findMany({
+      orderBy: {
+        sentData: 'desc'
+      }
+    })
+
+    return messages
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export async function deleteMessage(messageId) {
+  try {
+    await clientDB.contactMessage.delete({
+      where: {
+        id: messageId
+      }
+    })
+
+    return {success: true, message: "Message has been deleted"}
+  } catch (e) {
+    console.log(e)
+    return {success: false, message: "Error check console"}
+  }
+}

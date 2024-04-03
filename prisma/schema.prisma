@@ -14,15 +14,17 @@ datasource db {
 }
 
 model Article {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String   @unique
-  body       String
-  keywords   String
-  categoryId String   @db.ObjectId
-  category   Category @relation(fields: [categoryId], references: [id])
-  imageUrl   String
-  slug       String   @unique
-  postedAt   DateTime @default(now())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String   @unique
+  body          String
+  keywords      String
+  description   String
+  categoryId    String   @db.ObjectId
+  category      Category @relation(fields: [categoryId], references: [id])
+  imagePublicId String
+  imageUrl      String
+  slug          String   @unique
+  postedAt      DateTime @default(now())
 }
 
 model Category {

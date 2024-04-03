@@ -1,16 +1,16 @@
 "use server"
-import prisma from "@/prisma/clientDB";
+import clientDB from "@/prisma/clientDB";
 
 export async function addNewsletter(emailAddress) {
   try {
-    const existNewsletter = await prisma.newsletter.findUnique({
+    const existNewsletter = await clientDB.newsletter.findUnique({
       where: {
         email: emailAddress
       }
     })
 
     if(!existNewsletter) {
-      await prisma.newsletter.create({
+      await clientDB.newsletter.create({
         data: {
           email: emailAddress
         }

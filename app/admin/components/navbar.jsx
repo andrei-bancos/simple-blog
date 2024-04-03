@@ -1,10 +1,11 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 
 export default function Navbar({user}) {
   const router = useRouter()
+  const pathname = usePathname()
   return(
     <nav className="container mx-auto my-[50px]">
       <div className="flex flex-col p-[25px_30px] gap-[30px] bg-white rounded-[10px] shadow-md">
@@ -29,13 +30,19 @@ export default function Navbar({user}) {
           <h1 className="text-[25px] font-medium">Admin panel</h1>
           <ul className="flex flex-wrap justify-center gap-[10px_30px]">
             <li className="text-[20px] font-medium">
-              <Link href="/admin">Home</Link>
+              <Link className={`${pathname === "/admin" ? "text-red-500" : ""}`} href="/admin">
+                Home
+              </Link>
             </li>
             <li className="text-[20px] font-medium">
-              <Link href="/admin/articles">Articles</Link>
+              <Link className={`${pathname === "/admin/articles" ? "text-red-500" : ""}`} href="/admin/articles">
+                Articles
+              </Link>
             </li>
             <li className="text-[20px] font-medium">
-              <Link href="/admin/contact">Contact</Link>
+              <Link className={`${pathname === "/admin/contact" ? "text-red-500" : ""}`} href="/admin/contact">
+                Contact
+              </Link>
             </li>
           </ul>
         </div>

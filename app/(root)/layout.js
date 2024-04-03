@@ -1,4 +1,3 @@
-"use client"
 import Navbar from "@/app/globalComponents/navbar";
 import Footer from "@/app/globalComponents/footer";
 
