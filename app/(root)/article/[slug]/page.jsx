@@ -1,10 +1,32 @@
-import Image from "next/image";
 import {notFound} from "next/navigation";
 import {getArticleBySlug} from "@/serverActions/articlesServerAction";
 import ShowArticle from "@/app/globalComponents/showArticle";
 
-export const metadata = {
-  title: "Article title"
+export async function generateMetadata({params}) {
+  const slug = decodeURIComponent(params.slug)
+  const article = await getArticleBySlug(slug)
+  if(article === null) return null
+  return {
+    title: article.title,
+    keywords: article.keywords,
+    description: article.description,
+    openGraph: {
+      title: article.title,
+      description: article.description,
+      url: '',
+      images: [
+        {
+          url: article.imageUrl,
+          width: '',
+          height: '',
+        }
+      ],
+      siteName: 'Simple-Blog',
+      locale: 'en_US',
+      type: 'article',
+      publishedTime: article.postedAt
+    },
+  }
 }
 
 export default async function ArticlePage({params}) {

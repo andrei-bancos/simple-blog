@@ -73,10 +73,11 @@ export default function AddForm({categories}) {
     if(res.success) {
       setArticlePreviewImage("/article-image.png")
       setArticleTitle("Article title")
+      setArticleDescription("")
       setArticleKeywords("blog, web, dev")
       setArticleCategory({id: "0", name: "Category"})
       fileInputRef.current.value = ""
-      setArticleBody("Write article content")
+      setArticleBody("Write article content");
       setInfoMsg(res.message)
       setTimeout(() => setInfoMsg(""), 3000)
     } else {
@@ -118,7 +119,7 @@ export default function AddForm({categories}) {
           required
         />
         <select
-          className="h-[50px] px-[10px] rounded-[10px] shadow-md"
+          className="h-[50px] px-[10px] rounded-[10px] bg-white shadow-md"
           value={articleCategory.id}
           onChange={onChangeArticleCategory}
           required
@@ -143,7 +144,7 @@ export default function AddForm({categories}) {
           type="submit"
           disabled={disableBtn}
         >
-          Add
+          {disableBtn ? "Waiting.." : "Add"}
         </button>
       </form>
     </section>

@@ -10,3 +10,19 @@ export async function getCategories() {
     console.error(e)
   }
 }
+
+export async function getCountArticlesPerCategory() {
+  try {
+    const result = await prisma.category.findMany({
+      include: {
+        _count: {
+          select: {Article: true}
+        }
+      }
+    })
+
+    return result
+  } catch (e) {
+    console.error(e)
+  }
+}

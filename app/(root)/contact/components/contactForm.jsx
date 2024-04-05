@@ -9,10 +9,12 @@ export default function ContactForm() {
   const [message, setMessage] = useState("")
 
   const [infoMsg, setInfoMsg] = useState("")
+  const [disableBtn, setDisableBtn] = useState(false)
 
   const submit = async (e) => {
     e.preventDefault()
-
+    setDisableBtn(true
+    )
     const data = {
       fullName,
       email,
@@ -30,9 +32,11 @@ export default function ContactForm() {
         setEmail("")
         setSubject("")
         setMessage("")
+        setDisableBtn(false)
       }, 3000)
     } else {
       setInfoMsg(res.message)
+      setDisableBtn(false)
       setTimeout(() => setInfoMsg(""), 3000)
     }
   }
@@ -74,8 +78,9 @@ export default function ContactForm() {
       <button
         className="text-white text-[20px] font-medium w-[150px] h-[50px] rounded-[10px] bg-black shadow-md"
         type="submit"
+        disabled={disableBtn}
       >
-        Send
+        {disableBtn ? "Waiting.." : "Send"}
       </button>
     </form>
   )

@@ -3,8 +3,9 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import {TextAlign} from "@tiptap/extension-text-align";
+import {useEffect} from "react";
 
-export default function Tiptap({currentHtmlContent, setHtmlContent}) {
+export default function TextEditor({currentHtmlContent, setHtmlContent}) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -21,6 +22,12 @@ export default function Tiptap({currentHtmlContent, setHtmlContent}) {
       setHtmlContent(editor.getHTML())
     }
   })
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(currentHtmlContent);
+    }
+  }, [currentHtmlContent]);
 
   if (!editor) {
     return null

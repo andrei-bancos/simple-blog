@@ -81,10 +81,18 @@ export async function createArticle(article) {
 
 export async function deleteArticle(articleId) {
   try {
-    await clientDB.article.delete({
+    await clientDB.article.findFirst({
       where: {
         id: articleId
       }
+    }).then(async (article) => {
+      await clientDB.article.delete({
+        where: {
+          id: articleId
+        }
+      })
+      await cloudinary.api.delete_resources([article.imagePublicId])
+      await cloudinary.api.delete_folder("simple-blog/" + article.title)
     })
 
     revalidatePath("/", "layout")
