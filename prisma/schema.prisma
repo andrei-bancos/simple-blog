@@ -20,7 +20,7 @@ model Article {
   keywords      String
   description   String
   categoryId    String   @db.ObjectId
-  category      Category @relation(fields: [categoryId], references: [id])
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   imagePublicId String
   imageUrl      String
   slug          String   @unique
