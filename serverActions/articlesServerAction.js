@@ -2,6 +2,7 @@
 import clientDB from "@/prisma/clientDB";
 import cloudinary from "@/until/cloudinary";
 import {revalidatePath} from "next/cache";
+import ObjectID from "bson-objectid";
 
 export async function getArticles() {
   try {
@@ -48,11 +49,13 @@ export async function createArticle(article) {
       return {success: false, message: "Another article have this title.."}
     }
 
+    const articleId = new ObjectID();
+
     await cloudinary.uploader.upload_large(
       article.articleImage,
       {
         resource_type: "image",
-        folder: `simple-blog/${article.title}`
+        folder: `simple-blog/${articleId}`
       }
     ).then(async (res) => {
       article.imagePublicId = res.public_id
@@ -61,6 +64,7 @@ export async function createArticle(article) {
 
     await clientDB.article.create({
       data: {
+        id: articleId,
         title: article.title,
         body: article.body,
         categoryId: article.category.id,
@@ -73,6 +77,60 @@ export async function createArticle(article) {
     })
     revalidatePath("/", "layout")
     return {success: true, message: "Article has been created"}
+  } catch (e) {
+    console.error(e)
+    return {success: false, message: "Error check console"}
+  }
+}
+
+export async function updateArticle(article) {
+  try {
+    let articleTitleExists = false;
+    await clientDB.article.findUnique({
+      where: {
+        title: article.title
+      }
+    }).then(res => {
+      if(res && res.id !== article.id) {
+        articleTitleExists = true
+      }
+    })
+
+    if(articleTitleExists) return {success: false, message: "Another article have this title.."}
+
+    // if image are changed
+    if(article.articleImage !== '') {
+      await cloudinary.api.delete_resources([article.imagePublicId])
+      await cloudinary.uploader.upload_large(
+        article.articleImage,
+        {
+          resource_type: "image",
+          folder: `simple-blog/${article.id}`
+        }
+      ).then(async (res) => {
+        article.imagePublicId = res.public_id
+        article.imageUrl = res.secure_url
+      })
+    }
+
+    await clientDB.article.update({
+      where: {
+        id: article.id
+      },
+      data: {
+        title: article.title,
+        body: article.body,
+        keywords: article.keywords,
+        description: article.description,
+        imagePublicId: article.imagePublicId,
+        imageUrl: article.imageUrl,
+        slug: article.title.replaceAll(" ", "-"),
+        categoryId: article.category.id,
+      }
+    })
+
+    revalidatePath("/", "layout")
+    return {success: true, message: "Article has been updated"}
   } catch (e) {
     console.error(e)
     return {success: false, message: "Error check console"}
@@ -92,7 +150,7 @@ export async function deleteArticle(articleId) {
         }
       })
       await cloudinary.api.delete_resources([article.imagePublicId])
-      await cloudinary.api.delete_folder("simple-blog/" + article.title)
+      await cloudinary.api.delete_folder("simple-blog/" + article.id)
     })
 
     revalidatePath("/", "layout")

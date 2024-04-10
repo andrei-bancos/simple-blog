@@ -24,10 +24,10 @@ export default function TextEditor({currentHtmlContent, setHtmlContent}) {
   })
 
   useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(currentHtmlContent);
+    if (editor && currentHtmlContent === null) {
+      editor.commands.setContent("Write article content");
     }
-  }, [currentHtmlContent]);
+  }, [editor, currentHtmlContent]);
 
   if (!editor) {
     return null
@@ -73,66 +73,77 @@ const Toolbar = ({ editor }) => {
     <div className="flex gap-[15px] p-[10px_15px] bg-white rounded-[10px] shadow-md">
       <button
         className={`text-[20px] font-medium ${editor.isActive('heading', {level: 2}) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyHeading(2)}
       >
         H2
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive('heading', {level: 3}) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyHeading(3)}
       >
         H3
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive('heading', {level: 4}) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyHeading(4)}
       >
         H4
       </button>
       <button
         className={`text-[20px] font-bold ${editor.isActive('bold') ? 'underline' : ''}`}
+        type="button"
         onClick={applyBold}
       >
         B
       </button>
       <button
         className={`text-[20px] font-bold italic ${editor.isActive('italic') ? 'underline' : ''}`}
+        type="button"
         onClick={applyItalic}
       >
         I
       </button>
       <button
         className={`text-[20px] font-bold line-through ${editor.isActive('strike') ? 'text-red-500' : ''}`}
+        type="button"
         onClick={applyStrike}
       >
         S
       </button>
       <button
         className="text-[20px] font-bold"
+        type="button"
         onClick={applyBr}
       >
         Br
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive({ textAlign: 'left' }) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyAlign("left")}
       >
         Left
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive({ textAlign: 'center' }) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyAlign("center")}
       >
         Center
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive({ textAlign: 'right' }) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyAlign("right")}
       >
         Right
       </button>
       <button
         className={`text-[20px] font-medium ${editor.isActive({ textAlign: 'justify' }) ? 'underline' : ''}`}
+        type="button"
         onClick={() => applyAlign("justify")}
       >
         Justify

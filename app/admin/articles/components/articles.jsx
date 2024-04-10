@@ -28,7 +28,10 @@ export default function Articles({articles, categories}) {
           >
             Add new article
           </button>
-          <button className="text-white text-[18px] p-[10px_15px] bg-black rounded-[10px] shadow-md">
+          <button
+            className="text-white text-[18px] p-[10px_15px] bg-black rounded-[10px] shadow-md"
+            onClick={() => router.push("/admin/articles/categories")}
+          >
             Categories
           </button>
         </div>
@@ -50,6 +53,7 @@ export default function Articles({articles, categories}) {
                 <div className="flex flex-col gap-[15px] w-full max-w-[150px]">
                   <button
                     className="text-[18px] text-white font-medium p-[10px_15px] bg-black rounded-[10px] shadow-md"
+                    onClick={() => router.push("/admin/articles/edit/" + article.slug)}
                   >
                     Edit
                   </button>

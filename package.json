@@ -16,6 +16,7 @@
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",
+    "bson-objectid": "^2.0.4",
     "chart.js": "^4.4.2",
     "cloudinary": "^2.1.0",
     "framer-motion": "^11.0.24",

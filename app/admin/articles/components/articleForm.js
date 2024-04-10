@@ -1,10 +1,13 @@
 "use client"
-import ShowArticle from "@/app/globalComponents/showArticle";
-import {useRef, useState} from "react";
 import TextEditor from "@/app/admin/articles/components/textEditor";
-import {createArticle} from "@/serverActions/articlesServerAction";
+import {useEffect, useRef, useState} from "react";
+import ShowArticle from "@/app/globalComponents/showArticle";
+import {createArticle, updateArticle} from "@/serverActions/articlesServerAction";
+import {useRouter} from "next/navigation";
 
-export default function AddForm({categories}) {
+export default function ArticleForm({article, categories}) {
+  const router = useRouter()
+
   const [articleTitle, setArticleTitle] = useState("Article title")
   const [articleDescription, setArticleDescription] = useState("")
   const [articleKeywords, setArticleKeywords] = useState("blog, web, dev")
@@ -16,6 +19,18 @@ export default function AddForm({categories}) {
   const [disableBtn, setDisableBtn] = useState(false)
 
   const fileInputRef= useRef(null)
+
+  useEffect(() => {
+    if(article) {
+      setArticleTitle(article.title)
+      setArticleDescription(article.description)
+      setArticleKeywords(article.keywords)
+      setArticleCategory({id: article.category.id, name: article.category.name})
+      setArticleBody(article.body)
+      setArticlePreviewImage(article.imageUrl)
+      setArticleImage("")
+    }
+  }, [article]);
 
   const data = {
     title: articleTitle.trim(),
@@ -68,31 +83,62 @@ export default function AddForm({categories}) {
       return setInfoMsg("Choose a category..")
     }
 
-    const res = await createArticle(data)
+    if(article) {
+      const updateData = {
+        id: article.id,
+        title: articleTitle.trim(),
+        body: articleBody,
+        category: articleCategory,
+        description: articleDescription,
+        keywords: articleKeywords,
+        imagePublicId: article.imagePublicId,
+        imageUrl: article.imageUrl,
+        articleImage: articleImage,
+      }
 
-    if(res.success) {
-      setArticlePreviewImage("/article-image.png")
-      setArticleTitle("Article title")
-      setArticleDescription("")
-      setArticleKeywords("blog, web, dev")
-      setArticleCategory({id: "0", name: "Category"})
-      fileInputRef.current.value = ""
-      setArticleBody("Write article content");
-      setInfoMsg(res.message)
-      setTimeout(() => setInfoMsg(""), 3000)
+      const res = await updateArticle(updateData);
+
+      if(res.success) {
+        if(article.title !== updateData.title) {
+          router.replace(
+            "/admin/articles/edit/" + articleTitle.replaceAll(" ", "-"),
+            {scroll: false}
+          )
+        }
+        setInfoMsg(res.message)
+        setTimeout(() => setInfoMsg(""), 3000)
+      } else {
+        setInfoMsg(res.message)
+      }
     } else {
-      setInfoMsg(res.message)
+      const res = await createArticle(data)
+
+      if(res.success) {
+        setArticlePreviewImage("/article-image.png")
+        setArticleTitle("Article title")
+        setArticleDescription("")
+        setArticleKeywords("blog, web, dev")
+        setArticleCategory({id: "0", name: "Category"})
+        fileInputRef.current.value = ""
+        setArticleBody(null);
+        setInfoMsg(res.message)
+        setTimeout(() => setInfoMsg(""), 3000)
+      } else {
+        setInfoMsg(res.message)
+      }
     }
 
     setDisableBtn(false)
   }
 
-  return(
-    <section className="container mx-auto">
-      <h2 className="text-[25px] font-medium mb-[20px]">Add article</h2>
+  return (
+    <>
+      <h2 className="text-[25px] font-medium mb-[20px]">
+        {article ? "Edit" : "Add"} article
+      </h2>
       <fieldset className="border border-solid border-gray-300 p-[15px] mb-[30px]">
         <legend className="text-[18px] text-red-500 font-medium px-[10px]">Preview</legend>
-        <ShowArticle article={data} />
+        <ShowArticle article={data}/>
       </fieldset>
       <form onSubmit={submit} className="flex flex-col w-full max-w-[1000px] gap-[20px]">
         <input
@@ -135,18 +181,18 @@ export default function AddForm({categories}) {
           type="file" accept="image/*"
           onChange={onChangeImage}
           ref={fileInputRef}
-          required
+          required={!article}
         />
-        <TextEditor currentHtmlContent={articleBody} setHtmlContent={setArticleBody} />
+        <TextEditor currentHtmlContent={article ? article.body : articleBody} setHtmlContent={setArticleBody}/>
         {infoMsg && <p className="text-[20px] font-medium">{infoMsg}</p>}
         <button
           className="text-white text-[20px] h-[50px] bg-black rounded-[10px] shadow-md"
           type="submit"
           disabled={disableBtn}
         >
-          {disableBtn ? "Waiting.." : "Add"}
+          {disableBtn ? "Waiting.." : article ? "Edit" : "Add" }
         </button>
       </form>
-    </section>
+    </>
   )
 }
