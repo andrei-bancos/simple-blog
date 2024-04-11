@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ShareArticle from "@/app/(root)/article/[slug]/components/shareArticle";
 
 export default function ShowArticle({article}) {
   if(article.postedAt) {
@@ -30,15 +31,18 @@ export default function ShowArticle({article}) {
           <h3 className="text-[20px] font-medium">
             Posted at: <span className="font-normal italic">{article.postedAt.toLocaleString()}</span>
           </h3>
-          <div>
-            <h3 className="text-[20px] font-medium">Keywords:</h3>
-            <ul className="flex flex-wrap mt-[15px] gap-[10px]">
-              {
-                article.keywords.split(', ').map((keyword) => (
-                  <li key={keyword} className="p-[5px_10px] bg-white rounded-[10px] shadow-md">{keyword}</li>
-                ))
-              }
-            </ul>
+          <div className="flex flex-col gap-[30px]">
+            <div>
+              <h3 className="text-[20px] font-medium">Keywords:</h3>
+              <ul className="flex flex-wrap mt-[15px] gap-[10px]">
+                {
+                  article.keywords.split(', ').map((keyword) => (
+                    <li key={keyword} className="p-[5px_10px] bg-white rounded-[10px] shadow-md">{keyword}</li>
+                  ))
+                }
+              </ul>
+            </div>
+            <ShareArticle article={article} />
           </div>
         </div>
       </div>
