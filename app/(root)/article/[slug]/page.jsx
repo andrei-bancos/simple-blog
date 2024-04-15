@@ -1,6 +1,7 @@
 import {notFound} from "next/navigation";
 import {getArticleBySlug} from "@/serverActions/articlesServerAction";
 import ShowArticle from "@/app/globalComponents/showArticle";
+import {isAuthenticateAsAdmin} from "@/serverActions/authServerAction";
 
 export async function generateMetadata({params}) {
   const slug = decodeURIComponent(params.slug)
@@ -35,9 +36,11 @@ export default async function ArticlePage({params}) {
 
   if(article == null) return notFound();
 
+  const isAdmin = await isAuthenticateAsAdmin()
+
   return(
     <section className="container mx-auto">
-      <ShowArticle article={article} />
+      <ShowArticle article={article} isAdmin={isAdmin} />
     </section>
   )
 }

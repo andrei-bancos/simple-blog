@@ -1,4 +1,14 @@
+"use client"
+
 export default function Banner() {
+
+  const scrollBottom = () => {
+    window.scroll({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <section className="container mx-auto">
       <div
@@ -12,7 +22,10 @@ export default function Banner() {
           Discover the latest trends, reviews, and tutorials covering a wide range of tech topics.
           Join us as we navigate the digital world together!
         </p>
-        <button className="text-white text-[20px] sm:text-[23px] w-fit bg-red-500 p-[15px_20px] rounded-[10px]">
+        <button
+          className="text-white text-[20px] sm:text-[23px] w-fit bg-red-500 p-[15px_20px] rounded-[10px] shadow-md"
+          onClick={() => scrollBottom()}
+        >
           Subscribe newsletter
         </button>
       </div>

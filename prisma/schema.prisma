@@ -25,12 +25,23 @@ model Article {
   imageUrl      String
   slug          String   @unique
   postedAt      DateTime @default(now())
+  comments Comment[]
 }
 
 model Category {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
   name    String    @unique
   Article Article[]
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  fullName  String
+  email     String
+  message   String
+  articleId String   @db.ObjectId
+  article   Article  @relation(fields: [articleId], references: [id])
+  postedAt  DateTime @default(now())
 }
 
 model ContactMessage {

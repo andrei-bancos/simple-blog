@@ -1,12 +1,14 @@
 import {getServerSession} from "next-auth";
 
-export async function isNotAuthenticate() {
+export async function isAuthenticateAsAdmin() {
   const session = await getServerSession()
   if(session) {
     const user = session.user
-    return !user || user.email !== process.env.GOOGLE_ADMIN_EMAIL
+    if(user && user.email === process.env.GOOGLE_ADMIN_EMAIL) {
+      return true;
+    }
   } else {
-    return true
+    return false
   }
 }
 

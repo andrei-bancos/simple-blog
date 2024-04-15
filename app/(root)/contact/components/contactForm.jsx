@@ -1,6 +1,7 @@
 "use client"
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {sendMessage} from "@/serverActions/contactServerAction";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
   const [fullName, setFullName] = useState("")
@@ -11,10 +12,13 @@ export default function ContactForm() {
   const [infoMsg, setInfoMsg] = useState("")
   const [disableBtn, setDisableBtn] = useState(false)
 
+  const captchaRef = useRef();
+  const [captcha, setCaptcha] = useState(null)
+
   const submit = async (e) => {
     e.preventDefault()
-    setDisableBtn(true
-    )
+    setDisableBtn(true)
+
     const data = {
       fullName,
       email,
@@ -33,6 +37,8 @@ export default function ContactForm() {
         setSubject("")
         setMessage("")
         setDisableBtn(false)
+        setCaptcha(null)
+        captchaRef.current.reset()
       }, 3000)
     } else {
       setInfoMsg(res.message)
@@ -75,10 +81,18 @@ export default function ContactForm() {
         onChange={(e) => setMessage(e.target.value)}
         required
       />
+      <ReCAPTCHA
+        ref={captchaRef}
+        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        size="normal"
+        theme="light"
+        onChange={setCaptcha}
+      />
       <button
-        className="text-white text-[20px] font-medium w-[150px] h-[50px] rounded-[10px] bg-black shadow-md"
+        className={`text-white text-[20px] font-medium w-[150px] h-[50px] rounded-[10px] bg-black shadow-md 
+                    ${!captcha && "opacity-50"}`}
         type="submit"
-        disabled={disableBtn}
+        disabled={disableBtn || !captcha}
       >
         {disableBtn ? "Waiting.." : "Send"}
       </button>

@@ -8,7 +8,7 @@ export async function getArticles() {
   try {
     const articles = await clientDB.article.findMany({
       include: {
-        category: true
+        category: true,
       },
       orderBy: {
         postedAt: 'desc'
@@ -24,7 +24,12 @@ export async function getArticleBySlug(slug) {
   try {
     const article = await clientDB.article.findUnique({
       include: {
-        category: true
+        category: true,
+        comments: {
+          orderBy: {
+            postedAt: 'desc'
+          }
+        }
       },
       where: {
         slug: slug

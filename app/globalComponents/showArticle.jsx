@@ -1,7 +1,18 @@
+"use client"
 import Image from "next/image";
 import ShareArticle from "@/app/(root)/article/[slug]/components/shareArticle";
+import Comments from "@/app/(root)/article/[slug]/components/comments";
+import FormComments from "@/app/(root)/article/[slug]/components/formComments";
+import {usePathname} from "next/navigation";
 
-export default function ShowArticle({article}) {
+export default function ShowArticle({article, isAdmin}) {
+  const pathname = usePathname()
+  let showShareAndComments = true
+
+  if(pathname === "/admin/articles/add" || pathname.includes("edit")) {
+    showShareAndComments = false
+  }
+
   if(article.postedAt) {
     article.postedAt = article.postedAt.toLocaleString()
   } else {
@@ -42,7 +53,14 @@ export default function ShowArticle({article}) {
                 }
               </ul>
             </div>
-            <ShareArticle article={article} />
+            {
+              showShareAndComments &&
+              <>
+                <ShareArticle article={article} />
+                <FormComments articleId={article.id} />
+                <Comments comments={article.comments} isAdmin={isAdmin} />
+              </>
+            }
           </div>
         </div>
       </div>

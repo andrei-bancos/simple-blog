@@ -23,7 +23,7 @@ export default function ShareArticle({article}) {
   return(
     <div>
       <h3 className="text-[20px] font-medium">Share article</h3>
-      <div className="flex gap-[10px] mt-[15px]">
+      <div className="flex flex-wrap gap-[10px] mt-[15px]">
         <FacebookShareButton url={url}>
           <FacebookIcon size="44" round />
         </FacebookShareButton>
