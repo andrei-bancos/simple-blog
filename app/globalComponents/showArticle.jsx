@@ -7,10 +7,10 @@ import {usePathname} from "next/navigation";
 
 export default function ShowArticle({article, isAdmin}) {
   const pathname = usePathname()
-  let showShareAndComments = true
+  let adminPanel = false
 
   if(pathname === "/admin/articles/add" || pathname.includes("edit")) {
-    showShareAndComments = false
+    adminPanel = true
   }
 
   if(article.postedAt) {
@@ -26,7 +26,9 @@ export default function ShowArticle({article, isAdmin}) {
         <div className="max-w-[1000px] text-[18px] text-justify">
           <Image
             className="object-cover object-left-top rounded-[10px] shadow-md mb-[50px] max-h-[500px]"
-            src={article.imageUrl}
+            src={
+            adminPanel ? article.imageUrl : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/c_scale,w_2560/${article.imagePublicId}.webp`
+          }
             width="1920"
             height="1000"
             alt=""
@@ -54,7 +56,7 @@ export default function ShowArticle({article, isAdmin}) {
               </ul>
             </div>
             {
-              showShareAndComments &&
+              !adminPanel &&
               <>
                 <ShareArticle article={article} />
                 <FormComments articleId={article.id} />
