@@ -3,7 +3,9 @@ import Banner from "@/app/(root)/components/banner";
 import Newsletter from "@/app/(root)/components/newsletter";
 
 export const metadata = {
-  title: "Simple blog"
+  title: "Simple blog",
+  description: "This is my simple blog",
+  keyword: "Simple blog, web, application"
 }
 
 export default async function Home() {

@@ -5,7 +5,9 @@ import {Suspense} from "react";
 import Loading from "@/app/globalComponents/Loading";
 
 export const metadata = {
-  title: "Articles"
+  title: "Articles",
+  description: "See our articles about technology and start discovering new things",
+  keyword: "Simple blog, web, application, articles"
 }
 
 export default async function ArticlesPage() {

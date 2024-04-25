@@ -3,7 +3,9 @@ import SocialMedia from "@/app/(root)/contact/components/socialMedia";
 import Newsletter from "@/app/(root)/components/newsletter";
 
 export const metadata = {
-  title: 'Contact'
+  title: 'Contact',
+  description: "Contact us or propose a topic for a new article",
+  keyword: "Simple blog, web, application, contact, message, social media"
 }
 
 export default function ContactPage() {

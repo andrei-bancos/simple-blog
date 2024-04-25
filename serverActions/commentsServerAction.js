@@ -1,6 +1,14 @@
 "use server"
 import clientDB from "@/prisma/clientDB";
 
+export async function getAllComments() {
+  try {
+    return await clientDB.comment.findMany()
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export async function addComment(comment, articleId) {
   try {
     if(comment.fullName.length < 5) {
