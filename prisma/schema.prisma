@@ -14,18 +14,19 @@ datasource db {
 }
 
 model Article {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  title         String   @unique
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String    @unique
   body          String
   keywords      String
   description   String
-  categoryId    String   @db.ObjectId
-  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId    String    @db.ObjectId
+  category      Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   imagePublicId String
   imageUrl      String
-  slug          String   @unique
-  postedAt      DateTime @default(now())
-  comments Comment[]
+  slug          String    @unique
+  postedAt      DateTime  @default(now())
+  views         String[]  @default([])
+  comments      Comment[]
 }
 
 model Category {

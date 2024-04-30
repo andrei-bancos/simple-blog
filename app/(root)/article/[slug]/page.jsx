@@ -1,7 +1,8 @@
 import {notFound} from "next/navigation";
-import {getArticleBySlug} from "@/serverActions/articlesServerAction";
+import {getArticleBySlug, incrementNewView} from "@/serverActions/articlesServerAction";
 import ShowArticle from "@/app/globalComponents/showArticle";
 import {isAuthenticateAsAdmin} from "@/serverActions/authServerAction";
+import {headers} from "next/headers";
 
 export async function generateMetadata({params}) {
   const slug = decodeURIComponent(params.slug)
@@ -35,6 +36,10 @@ export default async function ArticlePage({params}) {
   const article = await getArticleBySlug(slug)
 
   if(article == null) return notFound();
+
+  const header = headers();
+  const ipAddress = header.get("x-forwarded-for")
+  await incrementNewView(article.id, ipAddress)
 
   const isAdmin = await isAuthenticateAsAdmin()
 

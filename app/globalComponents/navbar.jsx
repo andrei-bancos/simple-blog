@@ -8,10 +8,13 @@ export default function Navbar({isAdmin}) {
     <nav className="my-[25px] p-[25px_30px] rounded-[10px] shadow-md bg-white">
       {
         isAdmin &&
-        <div className="flex justify-between gap-[30px] mb-[25px] p-[15px_25px] backdrop-blur-sm bg-[hsla(0,0%,7%,.8)]
-                     shadow-[0_-1px_3px_0_rgba(0,0,0,.35),0_3px_5px_0_rgba(0,0,0,.35)] rounded-[10px]">
-          <p className="text-[18px] text-white">You are connected as administrator</p>
-          <div className="flex gap-[15px]">
+        <div className="flex flex-wrap justify-center md:justify-between gap-[15px_30px] mb-[25px] p-[15px_25px]
+                        backdrop-blur-sm bg-[hsla(0,0%,7%,.8)]
+                        shadow-[0_-1px_3px_0_rgba(0,0,0,.35),0_3px_5px_0_rgba(0,0,0,.35)]
+                        rounded-[10px]"
+        >
+          <p className="text-[18px] text-white text-center">You are connected as administrator</p>
+          <div className="flex flex-wrap justify-center gap-[10px_15px]">
             <Link className="text-white" href="/admin">[ Admin panel ]</Link>
             <Link className="text-white" href="/api/auth/signout">[ Logout ]</Link>
           </div>

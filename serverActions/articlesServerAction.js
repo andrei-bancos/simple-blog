@@ -142,6 +142,33 @@ export async function updateArticle(article) {
   }
 }
 
+export async function incrementNewView(articleId, ipAddress) {
+  try {
+    const article = await clientDB.article.findUnique({
+      where: {
+        id: articleId
+      },
+    });
+
+    if (!article.views.includes(ipAddress)) {
+      article.views.push(ipAddress);
+
+      await clientDB.article.update({
+        where: {
+          id: articleId
+        },
+        data: {
+          views: {
+            set: article.views
+          },
+        },
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export async function deleteArticle(articleId) {
   try {
     await clientDB.article.findFirst({

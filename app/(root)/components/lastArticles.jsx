@@ -6,7 +6,7 @@ export default async function LastArticles() {
   return(
     <section className="flex flex-col items-center container mx-auto">
       <h2 className="text-[35px] font-medium mb-[30px]">Last articles</h2>
-      <div className="flex justify-center flex-wrap gap-[30px_60px]">
+      <div className="flex justify-center flex-wrap gap-[30px_50px]">
         {
           articles.length !== 0 ?
             articles.slice(0, 6).map(article => (

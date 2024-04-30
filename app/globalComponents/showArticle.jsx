@@ -4,6 +4,7 @@ import ShareArticle from "@/app/(root)/article/[slug]/components/shareArticle";
 import Comments from "@/app/(root)/article/[slug]/components/comments";
 import FormComments from "@/app/(root)/article/[slug]/components/formComments";
 import {usePathname} from "next/navigation";
+import {calculateReadingTime} from "@/until/articleUtils";
 
 export default function ShowArticle({article, isAdmin}) {
   const pathname = usePathname()
@@ -44,6 +45,16 @@ export default function ShowArticle({article, isAdmin}) {
           <h3 className="text-[20px] font-medium">
             Posted at: <span className="font-normal italic">{article.postedAt.toLocaleString()}</span>
           </h3>
+          { !adminPanel &&
+            <>
+              <h3 className="text-[20px] font-medium">
+                Reading time: <span className="font-normal italic">{calculateReadingTime(article.body)} min</span>
+              </h3>
+              <h3 className="text-[20px] font-medium">
+                Views: <span className="font-normal italic">{article.views.length}</span>
+              </h3>
+            </>
+          }
           <div className="flex flex-col gap-[30px]">
             <div>
               <h3 className="text-[20px] font-medium">Keywords:</h3>
@@ -58,9 +69,9 @@ export default function ShowArticle({article, isAdmin}) {
             {
               !adminPanel &&
               <>
-                <ShareArticle article={article} />
-                <FormComments articleId={article.id} />
-                <Comments comments={article.comments} isAdmin={isAdmin} />
+                <ShareArticle article={article}/>
+                <FormComments articleId={article.id}/>
+                <Comments comments={article.comments} isAdmin={isAdmin}/>
               </>
             }
           </div>
