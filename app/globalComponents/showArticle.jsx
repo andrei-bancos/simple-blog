@@ -29,10 +29,11 @@ export default function ShowArticle({article, isAdmin}) {
             className="object-cover object-left-top rounded-[10px] shadow-md mb-[50px] max-h-[500px]"
             src={
             adminPanel ? article.imageUrl : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/c_scale,w_2560/${article.imagePublicId}.webp`
-          }
+            }
             width="1920"
             height="1000"
             alt=""
+            priority
           />
           <div className="article" dangerouslySetInnerHTML={{__html: article.body}}>
 

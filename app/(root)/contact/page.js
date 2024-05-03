@@ -1,6 +1,7 @@
 import ContactForm from "@/app/(root)/contact/components/contactForm";
 import SocialMedia from "@/app/(root)/contact/components/socialMedia";
 import Newsletter from "@/app/(root)/components/newsletter";
+import {getSocialMedia} from "@/serverActions/socialMediaServerAction";
 
 export const metadata = {
   title: 'Contact',
@@ -8,7 +9,9 @@ export const metadata = {
   keyword: "Simple blog, web, application, contact, message, social media"
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const socialMedia = await getSocialMedia()
+
   return (
     <main className="min-h-screen">
       <section className="container mx-auto mb-[50px]">
@@ -18,7 +21,7 @@ export default function ContactPage() {
         </div>
         <div className="flex flex-wrap justify-center gap-[50px] w-full">
           <ContactForm />
-          <SocialMedia />
+          <SocialMedia socialMedia={socialMedia} />
         </div>
       </section>
       <Newsletter />

@@ -21,6 +21,7 @@ export default function Footer() {
           height="50"
           alt=""
           onClick={() => goTop()}
+          priority
         />
       </div>
     </footer>
