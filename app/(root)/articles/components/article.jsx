@@ -4,9 +4,9 @@ import {calculateReadingTime} from "@/until/articleUtils";
 
 export default function Article({data}) {
   return (
-    <article className="w-full max-w-[450px] bg-white p-[10px_15px] rounded-[10px] shadow-md">
+    <article className="w-full max-w-[450px] h-fit bg-white p-[10px_15px] rounded-[10px] shadow-md">
       <Image
-        className="object-cover object-left-top rounded-[10px] mb-[15px] h-full max-h-[250px]"
+        className="object-cover object-center rounded-[10px] mb-[15px] h-[250px] max-h-[250px]"
         src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/c_scale,w_720/${data.imagePublicId}.webp`}
         width="420"
         height="250"
